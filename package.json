@@ -9,10 +9,15 @@
   "devDependencies": {
     "@stoplight/spectral": "^6.5.0",
     "@types/express": "^4.17.17",
-    "@types/node": "^20.4.9"
+    "@types/node": "^20.4.9",
+    "prettier": "^3.0.1"
   },
+  "license": "MIT",
+  "version": "0.0.1-beta1",
   "scripts": {
     "start": "ts-node ./src/index.ts",
-    "generate": "tsoa routes && tsoa spec"
+    "format": "prettier --write .",
+    "generate": "tsoa routes && tsoa spec && yarn format",
+    "lint:spec": "spectral lint ./spec/petStore.json"
   }
 }

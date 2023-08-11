@@ -65,9 +65,9 @@
 #         run: |
 #           ./api-insights-cli analyze ${{ env.API_SPEC }} --analyzer="documentation"
 #   # diff:
-#     # Diff local spec file with last uploaded spec on service. 
-#     # Based on requirement change --latest to other version &amp; revisions. 
-#     # Note one spec should exist. 
+#     # Diff local spec file with last uploaded spec on service.
+#     # Based on requirement change --latest to other version &amp; revisions.
+#     # Note one spec should exist.
 #     # runs-on: ubuntu-latest
 #     # steps:
 #     #   - uses: actions/checkout@v3
