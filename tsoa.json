@@ -1,0 +1,21 @@
+{
+  "entryFile": "./src/index.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": ["./src/controllers/**/*Controller.ts"],
+  "spec": {
+    "host": "localhost:3000",
+    "basePath": "/",
+    "outputDirectory": "./spec",
+    "specVersion": 3,
+    "specFileBaseName": "petStore",
+    "info": {
+      "title": "Pet Store",
+      "version": "1.0.0",
+      "description": "This is the API for the Pet Store."
+    }
+  },
+  "routes": {
+    "basePath": "/",
+    "routesDir": "./src/routes"
+  }
+}
