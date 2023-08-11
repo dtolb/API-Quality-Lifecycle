@@ -1,4 +1,4 @@
-import { Route, Get, Post, BodyProp, Path } from 'tsoa';
+import { Route, Put, Get, Post, BodyProp, Path } from 'tsoa';
 import { Pet, createPet, getPets, getPetById } from '../models/Pet';
 
 @Route('pets')
@@ -25,5 +25,23 @@ export class PetController {
   @OperationId('createPet')
   public async createPet(@BodyProp() name: string): Promise<Pet> {
     return createPet(name);
+  }
+
+  @Put('{id}')
+  @Tags('Pets')
+  @Description('Update a pet by its ID.')
+  @OperationId('updatePet')
+  public async updatePet(
+    @Path() id: number,
+    @Body() pet: Partial<Pet>,
+  ): Promise<Pet | null> {
+    const index = pets.findIndex((p) => p.id === id);
+    if (index === -1) {
+      return null;
+    }
+
+    const existingPet = pets[index];
+    existingPet.name = pet.name ? pet.name : existingPet.name;
+    return existingPet;
   }
 }

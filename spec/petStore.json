@@ -19,6 +19,19 @@
         "required": ["id", "name"],
         "type": "object",
         "additionalProperties": false
+      },
+      "Partial_Pet_": {
+        "properties": {
+          "id": {
+            "type": "number",
+            "format": "double"
+          },
+          "name": {
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "description": "Make all properties in T optional"
       }
     },
     "securitySchemes": {}
@@ -123,6 +136,49 @@
             }
           }
         ]
+      },
+      "put": {
+        "operationId": "updatePet",
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Pet"
+                    }
+                  ],
+                  "nullable": true
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Pets"],
+        "security": [],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "double",
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Partial_Pet_"
+              }
+            }
+          }
+        }
       }
     }
   },

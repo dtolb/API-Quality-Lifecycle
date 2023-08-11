@@ -27,6 +27,18 @@ const models: TsoaRoute.Models = {
     additionalProperties: false,
   },
   // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  Partial_Pet_: {
+    dataType: 'refAlias',
+    type: {
+      dataType: 'nestedObjectLiteral',
+      nestedProperties: {
+        id: { dataType: 'double' },
+        name: { dataType: 'string' },
+      },
+      validators: {},
+    },
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
 const validationService = new ValidationService(models);
 
@@ -117,6 +129,36 @@ export function RegisterRoutes(app: Router) {
         const controller = new PetController();
 
         const promise = controller.createPet.apply(
+          controller,
+          validatedArgs as any,
+        );
+        promiseHandler(controller, promise, response, undefined, next);
+      } catch (err) {
+        return next(err);
+      }
+    },
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.put(
+    '/pets/:id',
+    ...fetchMiddlewares<RequestHandler>(PetController),
+    ...fetchMiddlewares<RequestHandler>(PetController.prototype.updatePet),
+
+    function PetController_updatePet(request: any, response: any, next: any) {
+      const args = {
+        id: { in: 'path', name: 'id', required: true, dataType: 'double' },
+        pet: { in: 'body', name: 'pet', required: true, ref: 'Partial_Pet_' },
+      };
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const controller = new PetController();
+
+        const promise = controller.updatePet.apply(
           controller,
           validatedArgs as any,
         );
