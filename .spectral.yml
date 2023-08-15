@@ -1,1 +1,4 @@
-extends: ['spectral:oas', 'spectral:asyncapi']
+extends:
+  - "@cisco-developer/api-insights-openapi-rulesets/api-insights-openapi-ruleset.js"
+  - "@cisco-developer/api-insights-openapi-rulesets/contract.js"
+  - "@cisco-developer/api-insights-openapi-rulesets/documentation.js"

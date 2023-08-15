@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@cisco-developer/api-insights-openapi-rulesets": "^0.1.14-alpha",
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
     "ts-node": "^10.9.1",

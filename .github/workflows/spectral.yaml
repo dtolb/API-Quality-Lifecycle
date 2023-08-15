@@ -24,5 +24,7 @@ jobs:
       - name: Generate OpenAPI spec
         run: yarn generate
 
-      - name: Run Spectral Lint
-        run: npx spectral lint ./spec/swagger.json
+      # Run Spectral
+      - uses: stoplightio/spectral-action@latest
+        with:
+          file_glob: 'spec/*.json'
