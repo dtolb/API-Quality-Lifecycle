@@ -4,9 +4,10 @@ import { Pet, createPet, getPets, getPetById } from '../models/Pet';
 @Route('pets')
 export class PetController {
   @Get()
-  @Tags('Pets')
-  @Description('Retrieve a list of all pets.')
   @OperationId('listPets')
+  /**
+   * Lists all pets in the PetStore
+   */
   public async getPets(): Promise<Pet[]> {
     return getPets();
   }

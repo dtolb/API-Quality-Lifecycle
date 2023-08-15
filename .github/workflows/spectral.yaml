@@ -1,8 +1,5 @@
 name: Spectral Lint
-permissions: 
-  pull-requests: write
-  actions: write
-  statuses: write
+permissions: write-all
 on:
   pull_request:
     branches:
