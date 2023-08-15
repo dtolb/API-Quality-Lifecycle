@@ -1,5 +1,8 @@
 name: Spectral Lint
-
+permissions: 
+  pull-requests: write
+  actions: write
+  statuses: write
 on:
   pull_request:
     branches:
@@ -26,5 +29,8 @@ jobs:
 
       # Run Spectral
       - uses: stoplightio/spectral-action@latest
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           file_glob: 'spec/*.json'
