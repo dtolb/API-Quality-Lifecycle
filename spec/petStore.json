@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "",
-    "version": "1.0.0-rev1",
+    "version": "1.1.0-rev1",
     "description": "This is the API for the Pet Store.",
     "license": {
       "name": "Apache 2.0"
@@ -587,6 +587,11 @@
             "description": "The name of the pet, can be updated later",
             "type": "string"
           },
+          "age": {
+            "description": "the age of the pet, can be updated later",
+            "type": "number",
+            "format": "double"
+          },
           "species": {
             "description": "The species of the pet",
             "type": "string"
@@ -600,11 +605,13 @@
         "example": {
           "id": 2,
           "name": "Fargo",
-          "species": "dog"
+          "species": "dog",
+          "age": 9
         },
         "additionalProperties": false,
         "required": [
           "name",
+          "age",
           "species",
           "id"
         ]
@@ -661,6 +668,11 @@
             "description": "The name of the pet, can be updated later",
             "type": "string"
           },
+          "age": {
+            "description": "the age of the pet, can be updated later",
+            "type": "number",
+            "format": "double"
+          },
           "species": {
             "description": "The species of the pet",
             "type": "string"
@@ -668,11 +680,13 @@
         },
         "example": {
           "name": "Fargo",
-          "species": "dog"
+          "species": "dog",
+          "age": 8
         },
         "additionalProperties": false,
         "required": [
           "name",
+          "age",
           "species"
         ]
       },
@@ -682,14 +696,21 @@
           "name": {
             "description": "The name of the pet, can be updated later",
             "type": "string"
+          },
+          "age": {
+            "description": "the age of the pet, can be updated later",
+            "type": "number",
+            "format": "double"
           }
         },
         "example": {
-          "name": "Dolph"
+          "name": "Dolph",
+          "age": 9
         },
         "additionalProperties": false,
         "required": [
-          "name"
+          "name",
+          "age"
         ]
       }
     },

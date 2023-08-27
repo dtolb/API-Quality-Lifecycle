@@ -42,6 +42,7 @@ const models: TsoaRoute.Models = {
     dataType: 'refObject',
     properties: {
       name: { dataType: 'string', required: true },
+      age: { dataType: 'double', required: true },
       species: { dataType: 'string', required: true },
       id: { dataType: 'double', required: true },
     },
@@ -70,6 +71,7 @@ const models: TsoaRoute.Models = {
     dataType: 'refObject',
     properties: {
       name: { dataType: 'string', required: true },
+      age: { dataType: 'double', required: true },
       species: { dataType: 'string', required: true },
     },
     additionalProperties: false,
@@ -79,6 +81,7 @@ const models: TsoaRoute.Models = {
     dataType: 'refObject',
     properties: {
       name: { dataType: 'string', required: true },
+      age: { dataType: 'double', required: true },
     },
     additionalProperties: false,
   },
