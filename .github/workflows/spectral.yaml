@@ -10,6 +10,8 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
+    environment:
+      name: GithubActions
 
     steps:
       - name: Checkout code
