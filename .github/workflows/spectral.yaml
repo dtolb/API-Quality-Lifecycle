@@ -1,5 +1,5 @@
 name: Spectral Lint
-
+permissions: write-all
 on:
   pull_request:
     branches:
@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14' # or your preferred Node version
+          node-version: '20' # or your preferred Node version
 
       - name: Install dependencies
         run: yarn install
@@ -24,5 +24,10 @@ jobs:
       - name: Generate OpenAPI spec
         run: yarn generate
 
-      - name: Run Spectral Lint
-        run: npx spectral lint ./spec/swagger.json
+      # Run Spectral
+      - uses: stoplightio/spectral-action@latest
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file_glob: 'spec/*.json'

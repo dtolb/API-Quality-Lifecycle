@@ -1,1 +1,13 @@
-extends: ['spectral:oas', 'spectral:asyncapi']
+extends:
+  - '@cisco-developer/api-insights-openapi-rulesets/api-insights-openapi-ruleset.js'
+  - '@cisco-developer/api-insights-openapi-rulesets/contract.js'
+  - '@cisco-developer/api-insights-openapi-rulesets/documentation.js'
+rules:
+  license-url: 'off'
+  date-response-header-requirement: 'off'
+  oas3-get-collection-sort-parameter: 'off'
+  oas3-get-collection-max-parameter-link-header-required-likely: warn
+  oas3-error-message: warn
+  post-header-location: warn
+  put-200-204-success: warn
+  oas3-https-only: warn

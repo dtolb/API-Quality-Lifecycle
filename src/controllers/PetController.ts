@@ -1,29 +1,132 @@
-import { Route, Get, Post, BodyProp, Path } from 'tsoa';
-import { Pet, createPet, getPets, getPetById } from '../models/Pet';
+import { Route, Put, Get, Post, Path, Body, OperationId, Tags, SuccessResponse, Response, Security, Query } from 'tsoa';
+import {
+  Pet,
+  createPet,
+  getPets,
+  getPetById,
+  CreatePetRequest,
+  updatePet,
+  UpdatePetRequest,
+  PaginationRequest,
+  PetsList,
+} from '../models/Pet';
+import { Controller } from '@tsoa/runtime';
+
+/**
+ * Error response returned on failure
+ */
+interface ErrorBody {
+  /**
+   * The message informing users of their error
+   */
+  message: string;
+}
+
+/**
+ * Common Headers Returned
+ * @example
+ * {
+ *   "TrackingId": "39580sdkgj2352",
+ *   "Date": "2023-08-26"
+ * }
+ */
+interface CommonResponseHeader {
+  /**
+   * Track each request's by this ID
+   */
+  TrackingId: string;
+  /**
+   * datetime of the request
+   * @isDateTime
+   */
+  Date: string;
+}
+
+/**
+ * Common Headers Returned
+ * @example
+ * {
+ *   "TrackingId": "39580sdkgj2352",
+ *   "Date": "2023-08-26",
+ *   "link": "https://myPets.com/v1/pets?link=123"
+ * }
+ */
+interface ListPetsHeaders extends CommonResponseHeader {
+  /**
+   * the URL to request more pets
+   */
+  link: string;
+}
 
 @Route('pets')
-export class PetController {
+@Response<ErrorBody & { message: 'User is not authorized' }, CommonResponseHeader>(401, 'Unauthorized')
+@Response<ErrorBody & { message: 'User is forbidden to access the resource' }, CommonResponseHeader>(403, 'Forbidden')
+@Security('api_key')
+export class PetController extends Controller {
+  /**
+   * Lists all pets in the PetStore
+   * @param max Maximum number of items to return
+   * @param order Sorting order
+   * @param offset offset id to get next page
+   */
   @Get()
-  @Tags('Pets')
-  @Description('Retrieve a list of all pets.')
   @OperationId('listPets')
-  public async getPets(): Promise<Pet[]> {
-    return getPets();
+  @Tags('Read')
+  @SuccessResponse<ListPetsHeaders>('200', 'OK')
+  public async getPets(@Query() max?: number, @Query() order?: 'asc' | 'desc', @Query() offset?: string): Promise<PetsList> {
+    const pagination: PaginationRequest = {
+      max,
+      order,
+      offset,
+    };
+    return getPets(pagination);
   }
 
+  /**
+   * Get a pet by its id
+   * @param id id of the pet to fetch
+   */
   @Get('{id}')
-  @Tags('Pets')
-  @Description('Retrieve a specific pet by its id.')
+  @Tags('Read')
   @OperationId('getPet')
+  @SuccessResponse<ListPetsHeaders>('200', 'OK')
   public async getPet(@Path() id: number): Promise<Pet | null> {
-    return getPetById(id) || null;
+    const pet = getPetById(id) || null;
+    if (pet === null) {
+      this.setStatus(404);
+      return null;
+    }
+    return pet;
   }
 
+  /**
+   * Create a new pet with its adorable name
+   * @param createPetRequest the information to create the pet
+   */
   @Post()
-  @Tags('Pets')
-  @Description('Create a new pet.')
+  @Tags('Write')
+  @SuccessResponse<CommonResponseHeader>('201', 'Created')
   @OperationId('createPet')
-  public async createPet(@BodyProp() name: string): Promise<Pet> {
-    return createPet(name);
+  public async createPet(@Body() createPetRequest: CreatePetRequest): Promise<Pet> {
+    this.setStatus(201);
+    return createPet(createPetRequest);
+  }
+
+  /**
+   * Update the pet information by its id
+   * @param id id of the pet to update
+   * @param updatePetRequest the information to update the Pet
+   */
+  @Put('{id}')
+  @Tags('Write')
+  @OperationId('updatePet')
+  @SuccessResponse<CommonResponseHeader>('200', 'OK')
+  public async updatePet(@Path() id: number, @Body() updatePetRequest: UpdatePetRequest): Promise<Pet | null> {
+    const updatedPet = updatePet(id, updatePetRequest);
+    if (updatedPet === null) {
+      this.setStatus(404);
+      return null;
+    }
+    return updatedPet;
   }
 }

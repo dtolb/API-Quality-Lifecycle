@@ -1,65 +1,191 @@
 {
-  "components": {
-    "examples": {},
-    "headers": {},
-    "parameters": {},
-    "requestBodies": {},
-    "responses": {},
-    "schemas": {
-      "Pet": {
-        "properties": {
-          "id": {
-            "type": "number",
-            "format": "double"
-          },
-          "name": {
-            "type": "string"
-          }
-        },
-        "required": ["id", "name"],
-        "type": "object",
-        "additionalProperties": false
-      }
-    },
-    "securitySchemes": {}
-  },
+  "openapi": "3.0.0",
   "info": {
     "title": "",
     "version": "0.0.1-beta1",
+    "description": "This is the API for the Pet Store.",
     "license": {
-      "name": "MIT"
+      "name": "Apache 2.0"
     },
-    "contact": {}
+    "contact": {
+      "name": "Dan Tolbert: dantolbe@cisco.com",
+      "url": "https://developer.cisco.com"
+    }
   },
-  "openapi": "3.0.0",
+  "servers": [
+    {
+      "url": "http://localhost:3000/v1"
+    }
+  ],
   "paths": {
     "/pets": {
       "get": {
         "operationId": "listPets",
+        "description": "Lists all pets in the PetStore",
+        "parameters": [
+          {
+            "name": "max",
+            "in": "query",
+            "description": "Maximum number of items to return",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "description": "Sorting order",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "offset id to get next page",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Ok",
+            "description": "OK",
+            "headers": {
+              "ListPetsHeaders": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListPetsHeaders"
+                },
+                "description": "Common Headers Returned"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/Pet"
-                  },
-                  "type": "array"
+                  "$ref": "#/components/schemas/PetsList"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "headers": {
+              "CommonResponseHeader": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponseHeader"
+                },
+                "description": "Common Headers Returned"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is not authorized"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "headers": {
+              "CommonResponseHeader": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponseHeader"
+                },
+                "description": "Common Headers Returned"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is forbidden to access the resource"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
                 }
               }
             }
           }
         },
-        "tags": ["Pets"],
-        "security": [],
-        "parameters": []
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "tags": [
+          "Read"
+        ]
       },
       "post": {
         "operationId": "createPet",
+        "description": "Create a new pet with its adorable name",
+        "parameters": [],
+        "requestBody": {
+          "description": "the information to create the pet",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "the information to create the pet",
+                "$ref": "#/components/schemas/CreatePetRequest"
+              }
+            }
+          }
+        },
         "responses": {
-          "200": {
-            "description": "Ok",
+          "201": {
+            "description": "Created",
+            "headers": {
+              "CommonResponseHeader": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponseHeader"
+                },
+                "description": "Common Headers Returned"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -67,35 +193,119 @@
                 }
               }
             }
-          }
-        },
-        "tags": ["Pets"],
-        "security": [],
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "headers": {
+              "CommonResponseHeader": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponseHeader"
                 },
-                "required": ["name"],
-                "type": "object"
+                "description": "Common Headers Returned"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is not authorized"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "headers": {
+              "CommonResponseHeader": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponseHeader"
+                },
+                "description": "Common Headers Returned"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is forbidden to access the resource"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "tags": [
+          "Write"
+        ]
       }
     },
     "/pets/{id}": {
       "get": {
         "operationId": "getPet",
+        "description": "Get a pet by its id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of the pet to fetch",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Ok",
+            "description": "OK",
+            "headers": {
+              "ListPetsHeaders": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListPetsHeaders"
+                },
+                "description": "Common Headers Returned"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -108,27 +318,402 @@
                 }
               }
             }
-          }
-        },
-        "tags": ["Pets"],
-        "security": [],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "format": "double",
-              "type": "number"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "headers": {
+              "CommonResponseHeader": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponseHeader"
+                },
+                "description": "Common Headers Returned"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is not authorized"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "headers": {
+              "CommonResponseHeader": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponseHeader"
+                },
+                "description": "Common Headers Returned"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is forbidden to access the resource"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
             }
           }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "tags": [
+          "Read"
+        ]
+      },
+      "put": {
+        "operationId": "updatePet",
+        "description": "Update the pet information by its id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of the pet to update",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "the information to update the Pet",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "the information to update the Pet",
+                "$ref": "#/components/schemas/UpdatePetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "CommonResponseHeader": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponseHeader"
+                },
+                "description": "Common Headers Returned"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Pet"
+                    }
+                  ],
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "headers": {
+              "CommonResponseHeader": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponseHeader"
+                },
+                "description": "Common Headers Returned"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is not authorized"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "headers": {
+              "CommonResponseHeader": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponseHeader"
+                },
+                "description": "Common Headers Returned"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is forbidden to access the resource"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "tags": [
+          "Write"
         ]
       }
     }
   },
-  "servers": [
+  "components": {
+    "parameters": {},
+    "schemas": {
+      "ErrorBody": {
+        "description": "Error response returned on failure",
+        "type": "object",
+        "properties": {
+          "message": {
+            "description": "The message informing users of their error",
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "message"
+        ]
+      },
+      "CommonResponseHeader": {
+        "description": "Common Headers Returned",
+        "type": "object",
+        "properties": {
+          "TrackingId": {
+            "description": "Track each request's by this ID",
+            "type": "string"
+          },
+          "Date": {
+            "description": "datetime of the request",
+            "type": "string"
+          }
+        },
+        "example": {
+          "TrackingId": "39580sdkgj2352",
+          "Date": "2023-08-26"
+        },
+        "additionalProperties": false,
+        "required": [
+          "TrackingId",
+          "Date"
+        ]
+      },
+      "Pet": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The name of the pet, can be updated later",
+            "type": "string"
+          },
+          "species": {
+            "description": "The species of the pet",
+            "type": "string"
+          },
+          "id": {
+            "description": "The id of the pet, used for update and fetching",
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "example": {
+          "id": 2,
+          "name": "Fargo",
+          "species": "dog"
+        },
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "species",
+          "id"
+        ]
+      },
+      "PetsList": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "The list of pets",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Pet"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "items"
+        ]
+      },
+      "ListPetsHeaders": {
+        "description": "Common Headers Returned",
+        "type": "object",
+        "properties": {
+          "TrackingId": {
+            "description": "Track each request's by this ID",
+            "type": "string"
+          },
+          "Date": {
+            "description": "datetime of the request",
+            "type": "string"
+          },
+          "link": {
+            "description": "the URL to request more pets",
+            "type": "string"
+          }
+        },
+        "example": {
+          "TrackingId": "39580sdkgj2352",
+          "Date": "2023-08-26",
+          "link": "https://myPets.com/v1/pets?link=123"
+        },
+        "additionalProperties": false,
+        "required": [
+          "TrackingId",
+          "Date",
+          "link"
+        ]
+      },
+      "CreatePetRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The name of the pet, can be updated later",
+            "type": "string"
+          },
+          "species": {
+            "description": "The species of the pet",
+            "type": "string"
+          }
+        },
+        "example": {
+          "name": "Fargo",
+          "species": "dog"
+        },
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "species"
+        ]
+      },
+      "UpdatePetRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "description": "The name of the pet, can be updated later",
+            "type": "string"
+          }
+        },
+        "example": {
+          "name": "Dolph"
+        },
+        "additionalProperties": false,
+        "required": [
+          "name"
+        ]
+      }
+    },
+    "examples": {},
+    "headers": {},
+    "requestBodies": {},
+    "responses": {},
+    "securitySchemes": {
+      "api_key": {
+        "type": "apiKey",
+        "name": "api_key",
+        "in": "query",
+        "description": "Access Key, default is abc123456"
+      }
+    }
+  },
+  "tags": [
     {
-      "url": "https://localhost:3000/"
+      "name": "Read",
+      "description": "Read operations"
+    },
+    {
+      "name": "Write",
+      "description": "Write operations"
     }
   ]
 }
