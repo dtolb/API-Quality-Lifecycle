@@ -92,6 +92,52 @@ export interface UpdatePetRequest {
   name: string;
 }
 
+/**
+ * Error response returned on failure
+ */
+export interface ErrorBody {
+  /**
+   * The message informing users of their error
+   */
+  message: string;
+}
+
+/**
+ * Common Headers Returned
+ * @example
+ * {
+ *   "TrackingId": "39580sdkgj2352",
+ *   "Date": "2023-08-26"
+ * }
+ */
+export interface CommonResponseHeader {
+  /**
+   * Track each request's by this ID
+   */
+  TrackingId: string;
+  /**
+   * datetime of the request
+   * @isDateTime
+   */
+  Date: string;
+}
+
+/**
+ * Common Headers Returned
+ * @example
+ * {
+ *   "TrackingId": "39580sdkgj2352",
+ *   "Date": "2023-08-26",
+ *   "link": "https://myPets.com/v1/pets?link=123"
+ * }
+ */
+export interface ListPetsHeaders extends CommonResponseHeader {
+  /**
+   * the URL to request more pets
+   */
+  link: string;
+}
+
 //in memory db for now
 export let pets: Pet[] = [];
 let nextId = 1;
