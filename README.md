@@ -6,27 +6,29 @@ Demo Workshop for 2023 Cisco IMPACT
 
 > Join us as we delve deep into strategies employed by quality focused API development teams. Our exploration will illuminate how to ensure swift feedback loops, quality releases, and continually updated documentation. In this session, we will demonstrate the distinctions between "design first" and "code first" approaches to API development, and how they fit within the API landscape.
 
-> We will share a range of tools designed for both methodologies that you can leverage to support consumers and producers at every juncture of the API lifecycle. You will see how to integrate API checkpoints into the CI/CD pipeline, effectively automating feedback to application developers and providing meticulous quality checks. 
+> We will share a range of tools designed for both methodologies that you can leverage to support consumers and producers at every juncture of the API lifecycle. You will see how to integrate API checkpoints into the CI/CD pipeline, effectively automating feedback to application developers and providing meticulous quality checks.
 
 ### Takeaways:
-* Learn strategies to ensure swift feedback, quality releases, and updated API documentation
-* Discover automated tools to support consumers and producers throughout the API lifecycle
+
+- Learn strategies to ensure swift feedback, quality releases, and updated API documentation
+- Discover automated tools to support consumers and producers throughout the API lifecycle
 
 ### Tools Used:
 
-* [Spectral](https://docs.stoplight.io/docs/spectral/674b27b261c3c-overview)
-* [TSOA](https://tsoa-community.github.io/reference/index.html)
-* [Postman](https://www.postman.com/)
-* [NPM](https://npmjs.com)
-* [TypeScript](https://www.typescriptlang.org/)
+- [Spectral](https://docs.stoplight.io/docs/spectral/674b27b261c3c-overview)
+- [TSOA](https://tsoa-community.github.io/reference/index.html)
+- [Postman](https://www.postman.com/)
+- [NPM](https://npmjs.com)
+- [TypeScript](https://www.typescriptlang.org/)
 
 ## Generating and running
 
 ### Prerequisites
 
-* Node.js: Ensure you have Node.js installed on your machine. If not, you can download and install it from here.
-* Yarn: This project uses Yarn as a package manager. If you do not have Yarn installed, you can install it by running:
-* 
+- Node.js: Ensure you have Node.js installed on your machine. If not, you can download and install it from here.
+- Yarn: This project uses Yarn as a package manager. If you do not have Yarn installed, you can install it by running:
+-
+
 ```bash
 npm install -g yarn
 ```
