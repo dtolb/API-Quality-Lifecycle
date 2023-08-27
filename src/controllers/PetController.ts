@@ -9,54 +9,11 @@ import {
   UpdatePetRequest,
   PaginationRequest,
   PetsList,
+  CommonResponseHeader,
+  ErrorBody,
+  ListPetsHeaders,
 } from '../models/Pet';
 import { Controller } from '@tsoa/runtime';
-
-/**
- * Error response returned on failure
- */
-interface ErrorBody {
-  /**
-   * The message informing users of their error
-   */
-  message: string;
-}
-
-/**
- * Common Headers Returned
- * @example
- * {
- *   "TrackingId": "39580sdkgj2352",
- *   "Date": "2023-08-26"
- * }
- */
-interface CommonResponseHeader {
-  /**
-   * Track each request's by this ID
-   */
-  TrackingId: string;
-  /**
-   * datetime of the request
-   * @isDateTime
-   */
-  Date: string;
-}
-
-/**
- * Common Headers Returned
- * @example
- * {
- *   "TrackingId": "39580sdkgj2352",
- *   "Date": "2023-08-26",
- *   "link": "https://myPets.com/v1/pets?link=123"
- * }
- */
-interface ListPetsHeaders extends CommonResponseHeader {
-  /**
-   * the URL to request more pets
-   */
-  link: string;
-}
 
 @Route('pets')
 @Response<ErrorBody & { message: 'User is not authorized' }, CommonResponseHeader>(401, 'Unauthorized')
