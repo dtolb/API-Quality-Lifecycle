@@ -6,10 +6,12 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "openapi-format": "^1.14.0",
+    "openapi-to-postmanv2": "^4.16.0",
     "postman-update-oas": "^0.0.1",
     "ts-node": "^10.9.1",
     "tsoa": "^5.1.1",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "yarn": "^1.22.19"
   },
   "devDependencies": {
     "@stoplight/spectral": "^6.5.0",
@@ -25,7 +27,9 @@
     "openAPIFormat": "openapi-format --configFile .openapi_format ./spec/petStore.json --output ./spec/petStore.json --json",
     "generate": "tsoa routes && tsoa spec && yarn formatJS && yarn openAPIFormat ",
     "lint:spec": "spectral lint ./spec/petStore.json --display-only-failures",
+    "lint:full": "spectral lint ./spec/petStore.json",
     "revalidate": "yarn generate && yarn lint:spec",
-    "updatePostman": "node ./node_modules/postman-update-oas/script.js './spec/petStore.json' '308093-457686bc-2c3a-4b4b-9262-6cc97e8da978'"
+    "updatePostman": "node ./node_modules/postman-update-oas/script.js './spec/petStore.json' '308093-457686bc-2c3a-4b4b-9262-6cc97e8da978'",
+    "generatePostman": "openapi2postmanv2 -s ./spec/petStore.json -o petStore-Postman-collection.json -p"
   }
 }
