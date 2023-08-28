@@ -26,6 +26,7 @@
     "openAPIFormat": "openapi-format --configFile .openapi_format ./spec/petStore.json --output ./spec/petStore.json --json",
     "generate": "tsoa routes && tsoa spec && yarn formatJS && yarn openAPIFormat ",
     "lint:spec": "spectral lint ./spec/petStore.json --display-only-failures",
+    "lint:full": "spectral lint ./spec/petStore.json",
     "revalidate": "yarn generate && yarn lint:spec",
     "updatePostman": "node ./node_modules/postman-update-oas/script.js './spec/petStore.json' '308093-457686bc-2c3a-4b4b-9262-6cc97e8da978'"
   }
