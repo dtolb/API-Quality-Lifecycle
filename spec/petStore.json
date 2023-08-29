@@ -404,13 +404,12 @@
         ]
       },
       "put": {
-        "operationId": "updatePet",
-        "description": "Update the pet information by its id",
+        "operationId": "UpdatePet",
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "id of the pet to update",
+            "description": "the id of the pet to update",
             "required": true,
             "schema": {
               "type": "number",
@@ -419,12 +418,12 @@
           }
         ],
         "requestBody": {
-          "description": "the information to update the Pet",
+          "description": "the new information to update the pet",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "description": "the information to update the Pet",
+                "description": "the new information to update the pet",
                 "$ref": "#/components/schemas/UpdatePetRequest"
               }
             }
@@ -533,9 +532,6 @@
           {
             "api_key": []
           }
-        ],
-        "tags": [
-          "Write"
         ]
       }
     }
@@ -584,11 +580,9 @@
         "type": "object",
         "properties": {
           "name": {
-            "description": "The name of the pet, can be updated later",
             "type": "string"
           },
           "age": {
-            "description": "the age of the pet, can be updated later",
             "type": "number",
             "format": "double"
           },
@@ -665,11 +659,9 @@
         "type": "object",
         "properties": {
           "name": {
-            "description": "The name of the pet, can be updated later",
             "type": "string"
           },
           "age": {
-            "description": "the age of the pet, can be updated later",
             "type": "number",
             "format": "double"
           },
@@ -694,18 +686,12 @@
         "type": "object",
         "properties": {
           "name": {
-            "description": "The name of the pet, can be updated later",
             "type": "string"
           },
           "age": {
-            "description": "the age of the pet, can be updated later",
             "type": "number",
             "format": "double"
           }
-        },
-        "example": {
-          "name": "Dolph",
-          "age": 9
         },
         "additionalProperties": false,
         "required": [

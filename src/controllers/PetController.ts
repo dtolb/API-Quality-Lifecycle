@@ -70,13 +70,11 @@ export class PetController extends Controller {
   }
 
   /**
-   * Update the pet information by its id
-   * @param id id of the pet to update
-   * @param updatePetRequest the information to update the Pet
+   *
+   * @param id the id of the pet to update
+   * @param updatePetRequest the new information to update the pet
    */
   @Put('{id}')
-  @Tags('Write')
-  @OperationId('updatePet')
   @SuccessResponse<CommonResponseHeader>('200', 'OK')
   public async updatePet(@Path() id: number, @Body() updatePetRequest: UpdatePetRequest): Promise<Pet | null> {
     const updatedPet = updatePet(id, updatePetRequest);

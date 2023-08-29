@@ -82,23 +82,8 @@ export interface CreatePetRequest extends UpdatePetRequest {
   species: string;
 }
 
-/**
- * @tsoaModel
- * @example
- * {
- *   "name": "Dolph",
- *   "age": 9
- * }
- */
 export interface UpdatePetRequest {
-  /**
-   * The name of the pet, can be updated later
-   */
   name: string;
-
-  /**
-   * the age of the pet, can be updated later
-   */
   age: number;
 }
 
