@@ -26,12 +26,6 @@ Demo Workshop for 2023 Cisco IMPACT
 ### Prerequisites
 
 - Node.js: Ensure you have Node.js installed on your machine. If not, you can download and install it from here.
-- Yarn: This project uses Yarn as a package manager. If you do not have Yarn installed, you can install it by running:
--
-
-```bash
-npm install -g yarn
-```
 
 ### Installation
 
@@ -44,13 +38,13 @@ git clone https://github.com/dtolb/IMPACT23-API-Lifecycle.git
 Navigate to the Project Directory:
 
 ```bash
-cd https://github.com/dtolb/IMPACT23-API-Lifecycle.git
+cd IMPACT23-API-Lifecycle
 ```
 
 Install Dependencies: Now, install the necessary project dependencies using Yarn:
 
 ```bash
-yarn install
+npm install
 ```
 
 ### Generating and Linting the API Spec
@@ -58,13 +52,13 @@ yarn install
 Generate Routes and API Specification: The generate script generates routes and the OpenAPI specification. It then formats the generated files for consistency:
 
 ```bash
-yarn generate
+npm run generate
 ```
 
 Lint the Specification: To ensure the OpenAPI specification adheres to best practices, run the linting script:
 
 ```bash
-yarn lint:spec
+npm run lint:spec
 ```
 
 ### Running the Application
@@ -72,7 +66,7 @@ yarn lint:spec
 Once the API spec is generated and linted, you can start the application:
 
 ```bash
-yarn start
+npm run start
 ```
 
 This command will launch the application using ts-node, serving the API as defined in your tsoa configuration.
@@ -81,17 +75,73 @@ Additional Scripts
 Format Codebase: You can ensure code consistency across the codebase using the formatting script:
 
 ```bash
-yarn formatJS
+npm run formatJS
 ```
 
 Revalidate: This script is a combination of the generate and lint steps. Useful for a quick validation:
 
 ```bash
-yarn revalidate
+npm run revalidate
+```
+
+generatePostman: creates the postman collection from the OpenAPI Document 
+
+```bash
+npm run generatePostman
 ```
 
 Update Postman Collection: If you wish to update the Postman collection based on the OpenAPI specification, run:
 
 ```bash
-yarn updatePostman
+npm run updatePostman
 ```
+
+### Sample Updates
+
+Take a look at some in progress updates to both add the DELETE method and an additional parameter to the POST and PUT methods.
+
+#### DELETE
+
+Navigate to the branch
+
+```bash
+git checkout delete-pet
+```
+
+Run the generate to make the new OpenAPI Document
+
+```bash
+npm run generate
+```
+
+Check the updates for Quality improvements
+
+```bash
+npm run lint:spec
+```
+
+Notice any errors? Try adding the annotations to rememdy the errors and then re-run the validation
+
+Specifically look at the [PetController](./src/controllers/PetController.ts) and the [Pet.ts Model](./src/models/Pet.ts)
+
+#### Updates
+
+Take a look at how we can add a new parameter to the POST and PUT methods.
+
+```bash
+git checkout add-age-to-pets
+```
+
+Run the generate to make the new OpenAPI Document
+
+```bash
+npm run generate
+```
+
+Check the updates for Quality improvements
+
+```bash
+npm run lint:spec
+```
+
+Specifically look at the [PetController](./src/controllers/PetController.ts) and the [Pet.ts Model](./src/models/Pet.ts) to see how the parameter was added.
