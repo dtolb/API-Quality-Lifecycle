@@ -88,7 +88,12 @@ export class PetController extends Controller {
     return updatedPet;
   }
 
+  /**
+   * Delete the pet by its id
+   * @param id id of the pet to be removed
+   */
   @Delete('{id}')
+  @SuccessResponse<CommonResponseHeader>('204', 'No Content')
   public async deletePet(@Path() id: number): Promise<Pet | null> {
     const deletedPet = deletePetById(id);
     if (deletedPet === null) {

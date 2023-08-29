@@ -540,10 +540,12 @@
       },
       "delete": {
         "operationId": "DeletePet",
+        "description": "Delete the pet by its id",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "id of the pet to be removed",
             "required": true,
             "schema": {
               "type": "number",
@@ -552,8 +554,16 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Ok",
+          "204": {
+            "description": "No Content",
+            "headers": {
+              "CommonResponseHeader": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponseHeader"
+                },
+                "description": "Common Headers Returned"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
