@@ -537,6 +537,116 @@
         "tags": [
           "Write"
         ]
+      },
+      "delete": {
+        "operationId": "DeletePet",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Pet"
+                    }
+                  ],
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "headers": {
+              "CommonResponseHeader": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponseHeader"
+                },
+                "description": "Common Headers Returned"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is not authorized"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "headers": {
+              "CommonResponseHeader": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponseHeader"
+                },
+                "description": "Common Headers Returned"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is forbidden to access the resource"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
       }
     }
   },

@@ -1,4 +1,4 @@
-import { Route, Put, Get, Post, Path, Body, OperationId, Tags, SuccessResponse, Response, Security, Query } from 'tsoa';
+import { Route, Put, Get, Post, Delete, Path, Body, OperationId, Tags, SuccessResponse, Response, Security, Query } from 'tsoa';
 import {
   Pet,
   createPet,
@@ -12,6 +12,7 @@ import {
   CommonResponseHeader,
   ErrorBody,
   ListPetsHeaders,
+  deletePetById,
 } from '../models/Pet';
 import { Controller } from '@tsoa/runtime';
 
@@ -85,5 +86,15 @@ export class PetController extends Controller {
       return null;
     }
     return updatedPet;
+  }
+
+  @Delete('{id}')
+  public async deletePet(@Path() id: number): Promise<Pet | null> {
+    const deletedPet = deletePetById(id);
+    if (deletedPet === null) {
+      this.setStatus(404);
+      return null;
+    }
+    return deletedPet;
   }
 }
