@@ -11,3 +11,4 @@ rules:
   post-header-location: warn
   put-200-204-success: warn
   oas3-https-only: warn
+  examples-for-every-schema: error
