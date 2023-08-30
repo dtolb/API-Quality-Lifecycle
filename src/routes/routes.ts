@@ -232,7 +232,7 @@ export function RegisterRoutes(app: Router) {
         const controller = new PetController();
 
         const promise = controller.deletePet.apply(controller, validatedArgs as any);
-        promiseHandler(controller, promise, response, undefined, next);
+        promiseHandler(controller, promise, response, 204, next);
       } catch (err) {
         return next(err);
       }

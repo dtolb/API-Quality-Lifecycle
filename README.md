@@ -84,7 +84,7 @@ Revalidate: This script is a combination of the generate and lint steps. Useful 
 npm run revalidate
 ```
 
-generatePostman: creates the postman collection from the OpenAPI Document 
+generatePostman: creates the postman collection from the OpenAPI Document
 
 ```bash
 npm run generatePostman
