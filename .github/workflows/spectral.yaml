@@ -65,7 +65,7 @@ jobs:
           DECK_PAT: ${{ secrets.DECK_PAT }}
         with:
           command: "file openapi2kong"
-          options: "--spec spec/petStore.json output-file petStoreKong.yaml"
+          options: "--spec ./spec/petStore.json output-file ./kong/petStoreKong.yaml"
         if: github.event_name == 'release'
 
       # Sync the state of the files to the Kong instance and update the deployment status in your repo by GitHub Deployment API
