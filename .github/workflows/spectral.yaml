@@ -1,4 +1,4 @@
-name: Spectral Lint
+name: Quality Pipeline
 permissions: write-all
 on:
   pull_request:
@@ -40,4 +40,32 @@ jobs:
         run: yarn updatePostman
         env:
           POSTMAN_API_KEY: ${{ secrets.POSTMAN_API_KEY }}
+        if: github.event_name == 'release'
+
+     # Ping to your Kong instance
+      - name: decK ping
+        id: decK_ping
+        uses: ikeike443/decK-action@master
+        with:
+          command: "ping"
+          options: "--konnect-runtime-group-name ${{ secrets.DECK_GROUP_NAME }} --konnect-token ${{ secrets.DECK_PAT }}"
+        if: github.event_name == 'release'
+
+     # Generate Config File to sync
+      - name: decK file openapi2kong
+        id: deck_file_openapi2kong
+        uses: ikeike443/decK-action@master
+        with:
+          command: "file openapi2kong"
+          options: "--spec spec/petStore.json output-file petStoreKong.yaml"
+        if: github.event_name == 'release'
+
+      # Sync the state of the files to the Kong instance and update the deployment status in your repo by GitHub Deployment API
+      - name: decK sync
+        id: decK_sync
+        uses: ikeike443/decK-action@master
+        with:
+          command: "sync -s petStoreKong.yaml"
+          options: "--konnect-runtime-group-name ${{ secrets.DECK_GROUP_NAME }} --konnect-token ${{ secrets.DECK_PAT }}"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
         if: github.event_name == 'release'
