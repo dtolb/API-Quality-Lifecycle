@@ -1,6 +1,6 @@
-# IMPACT23-API-Lifecycle
+# API-Quality-Lifecycle
 
-Demo Workshop for 2023 Cisco IMPACT
+Demo Workshop for leveraging open source tools to deploy and check APIs for quality gates.
 
 ## Overview
 
@@ -20,6 +20,7 @@ Demo Workshop for 2023 Cisco IMPACT
 - [Postman](https://www.postman.com/)
 - [NPM](https://npmjs.com)
 - [TypeScript](https://www.typescriptlang.org/)
+- [Kong](https://konghq.com/)
 
 ## Generating and running
 
@@ -32,13 +33,13 @@ Demo Workshop for 2023 Cisco IMPACT
 Clone the Repository: First, clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/dtolb/IMPACT23-API-Lifecycle.git
+git clone https://github.com/dtolb/API-Quality-Lifecycle.git
 ```
 
 Navigate to the Project Directory:
 
 ```bash
-cd IMPACT23-API-Lifecycle
+cd API-Quality-Lifecycle
 ```
 
 Install Dependencies: Now, install the necessary project dependencies using Yarn:
