@@ -46,6 +46,10 @@ jobs:
       - name: decK ping
         id: decK_ping
         uses: ikeike443/decK-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DECK_GROUP_NAME: ${{ secrets.DECK_GROUP_NAME }}
+          DECK_PAT: ${{ secrets.DECK_PAT }}
         with:
           command: "ping"
           options: "--konnect-runtime-group-name ${{ secrets.DECK_GROUP_NAME }} --konnect-token ${{ secrets.DECK_PAT }}"
@@ -55,6 +59,10 @@ jobs:
       - name: decK file openapi2kong
         id: deck_file_openapi2kong
         uses: ikeike443/decK-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DECK_GROUP_NAME: ${{ secrets.DECK_GROUP_NAME }}
+          DECK_PAT: ${{ secrets.DECK_PAT }}
         with:
           command: "file openapi2kong"
           options: "--spec spec/petStore.json output-file petStoreKong.yaml"
@@ -64,6 +72,10 @@ jobs:
       - name: decK sync
         id: decK_sync
         uses: ikeike443/decK-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DECK_GROUP_NAME: ${{ secrets.DECK_GROUP_NAME }}
+          DECK_PAT: ${{ secrets.DECK_PAT }}
         with:
           command: "sync -s petStoreKong.yaml"
           options: "--konnect-runtime-group-name ${{ secrets.DECK_GROUP_NAME }} --konnect-token ${{ secrets.DECK_PAT }}"
