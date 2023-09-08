@@ -18,6 +18,294 @@
     }
   ],
   "paths": {
+    "/humans": {
+      "get": {
+        "operationId": "listHumans",
+        "description": "Lists all humans in the PetStore",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HumansList"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is not authorized"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is forbidden to access the resource"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "tags": [
+          "Read"
+        ]
+      },
+      "post": {
+        "operationId": "createHuman",
+        "description": "Create a new pet with its adorable name",
+        "parameters": [],
+        "requestBody": {
+          "description": "the information to create the pet",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "the information to create the pet",
+                "$ref": "#/components/schemas/CreateHumanRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "headers": {
+              "LocationHeader": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocationHeader"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Human"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is not authorized"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is forbidden to access the resource"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "tags": [
+          "Write"
+        ]
+      }
+    },
+    "/humans/{id}": {
+      "get": {
+        "operationId": "getHuman",
+        "description": "Get a human by its id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of the human to fetch",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Human"
+                    }
+                  ],
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is not authorized"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is forbidden to access the resource"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "tags": [
+          "Read"
+        ]
+      }
+    },
     "/pets": {
       "get": {
         "operationId": "listPets",
@@ -698,6 +986,75 @@
         "required": [
           "TrackingId",
           "Date"
+        ]
+      },
+      "Human": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "description": "The id of the human, used for update and fetching",
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "example": {
+          "id": 2,
+          "name": "Dan"
+        },
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "id"
+        ]
+      },
+      "HumansList": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "The list of humans",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Human"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "required": [
+          "items"
+        ]
+      },
+      "LocationHeader": {
+        "type": "object",
+        "properties": {
+          "location": {
+            "description": "The URI of the Human",
+            "type": "string"
+          }
+        },
+        "example": {
+          "location": "https://petstore.com/v1/humans/1"
+        },
+        "additionalProperties": false,
+        "required": [
+          "location"
+        ]
+      },
+      "CreateHumanRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "name": "Dan"
+        },
+        "additionalProperties": false,
+        "required": [
+          "name"
         ]
       },
       "Pet": {

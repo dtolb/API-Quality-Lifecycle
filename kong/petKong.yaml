@@ -1,62 +1,92 @@
-_format_version: "3.0"
+_format_version: '3.0'
 services:
-- host: pet-store-kong-3abae03b4c44.herokuapp.com
-  id: 6ce82fd3-ffaa-564d-a98e-7b6cf11d7b5a
-  name: petstore
-  path: /v1
-  plugins: []
-  port: 80
-  protocol: http
-  routes:
-  - id: fcabe360-daec-5fbf-a2be-50f393c23e38
-    methods:
-    - GET
-    name: petstore_listpets
-    paths:
-    - ~/pets$
+  - host: pet-store-kong-3abae03b4c44.herokuapp.com
+    id: 6ce82fd3-ffaa-564d-a98e-7b6cf11d7b5a
+    name: petstore
+    path: /v1
     plugins: []
-    regex_priority: 200
-    strip_path: false
+    port: 80
+    protocol: http
+    routes:
+      - id: 9e26c451-2d9f-5150-88b5-2f54569f11e2
+        methods:
+          - GET
+        name: petstore_listhumans
+        paths:
+          - ~/humans$
+        plugins: []
+        regex_priority: 200
+        strip_path: false
+        tags: []
+      - id: 1e5e50c3-df1a-5ef5-8504-125fe42f3a78
+        methods:
+          - POST
+        name: petstore_createhuman
+        paths:
+          - ~/humans$
+        plugins: []
+        regex_priority: 200
+        strip_path: false
+        tags: []
+      - id: 8e00b833-e7e9-5be2-8f97-9f205cac53e7
+        methods:
+          - GET
+        name: petstore_gethuman
+        paths:
+          - ~/humans/(?<id>[^#?/]+)$
+        plugins: []
+        regex_priority: 100
+        strip_path: false
+        tags: []
+      - id: fcabe360-daec-5fbf-a2be-50f393c23e38
+        methods:
+          - GET
+        name: petstore_listpets
+        paths:
+          - ~/pets$
+        plugins: []
+        regex_priority: 200
+        strip_path: false
+        tags: []
+      - id: b3862911-a318-51f8-99e7-5f6f3685c61f
+        methods:
+          - POST
+        name: petstore_createpet
+        paths:
+          - ~/pets$
+        plugins: []
+        regex_priority: 200
+        strip_path: false
+        tags: []
+      - id: fe28075b-dc30-5646-869e-567b749aa8e9
+        methods:
+          - DELETE
+        name: petstore_deletepet
+        paths:
+          - ~/pets/(?<id>[^#?/]+)$
+        plugins: []
+        regex_priority: 100
+        strip_path: false
+        tags: []
+      - id: 0ef5ebf6-6973-5d23-a051-ab9367803be3
+        methods:
+          - GET
+        name: petstore_getpet
+        paths:
+          - ~/pets/(?<id>[^#?/]+)$
+        plugins: []
+        regex_priority: 100
+        strip_path: false
+        tags: []
+      - id: 7f1a9c95-7df0-5a54-8619-a59ace7f5604
+        methods:
+          - PUT
+        name: petstore_updatepet
+        paths:
+          - ~/pets/(?<id>[^#?/]+)$
+        plugins: []
+        regex_priority: 100
+        strip_path: false
+        tags: []
     tags: []
-  - id: b3862911-a318-51f8-99e7-5f6f3685c61f
-    methods:
-    - POST
-    name: petstore_createpet
-    paths:
-    - ~/pets$
-    plugins: []
-    regex_priority: 200
-    strip_path: false
-    tags: []
-  - id: fe28075b-dc30-5646-869e-567b749aa8e9
-    methods:
-    - DELETE
-    name: petstore_deletepet
-    paths:
-    - ~/pets/(?<id>[^#?/]+)$
-    plugins: []
-    regex_priority: 100
-    strip_path: false
-    tags: []
-  - id: 0ef5ebf6-6973-5d23-a051-ab9367803be3
-    methods:
-    - GET
-    name: petstore_getpet
-    paths:
-    - ~/pets/(?<id>[^#?/]+)$
-    plugins: []
-    regex_priority: 100
-    strip_path: false
-    tags: []
-  - id: 7f1a9c95-7df0-5a54-8619-a59ace7f5604
-    methods:
-    - PUT
-    name: petstore_updatepet
-    paths:
-    - ~/pets/(?<id>[^#?/]+)$
-    plugins: []
-    regex_priority: 100
-    strip_path: false
-    tags: []
-  tags: []
 upstreams: []
