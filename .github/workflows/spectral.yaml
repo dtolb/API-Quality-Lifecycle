@@ -66,7 +66,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DECK_GROUP_NAME: ${{ secrets.DECK_GROUP_NAME }}
           DECK_PAT: ${{ secrets.DECK_PAT }}
-        run: deck file openapi2kong --spec ./spec/petStore.json output-file ./kong/petStoreKong.yaml
+        run: deck file openapi2kong --spec ./spec/petStore.json --output-file ./kong/petStoreKong.yaml
         if: github.event_name == 'release'
 
       # Sync the state of the files to the Kong instance and update the deployment status in your repo by GitHub Deployment API
@@ -76,5 +76,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DECK_GROUP_NAME: ${{ secrets.DECK_GROUP_NAME }}
           DECK_PAT: ${{ secrets.DECK_PAT }}
-        run: deck sync -s petStoreKong.yaml --konnect-runtime-group-name ${{ secrets.DECK_GROUP_NAME }} --konnect-token ${{ secrets.DECK_PAT }}
+        run: deck sync -s ./kong/petStoreKong.yaml --konnect-runtime-group-name ${{ secrets.DECK_GROUP_NAME }} --konnect-token ${{ secrets.DECK_PAT }}
         if: github.event_name == 'release'
