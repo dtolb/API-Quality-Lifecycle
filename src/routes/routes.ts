@@ -12,6 +12,8 @@ import {
   fetchMiddlewares,
 } from '@tsoa/runtime';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { HumanController } from './../controllers/HumanController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PetController } from './../controllers/PetController';
 import { expressAuthentication } from './../auth';
 // @ts-ignore - no great way to install types from subpackage
@@ -34,6 +36,39 @@ const models: TsoaRoute.Models = {
     properties: {
       TrackingId: { dataType: 'string', required: true },
       Date: { dataType: 'string', required: true },
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  Human: {
+    dataType: 'refObject',
+    properties: {
+      name: { dataType: 'string', required: true },
+      id: { dataType: 'double', required: true },
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  HumansList: {
+    dataType: 'refObject',
+    properties: {
+      items: { dataType: 'array', array: { dataType: 'refObject', ref: 'Human' }, required: true },
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  LocationHeader: {
+    dataType: 'refObject',
+    properties: {
+      location: { dataType: 'string', required: true },
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  CreateHumanRequest: {
+    dataType: 'refObject',
+    properties: {
+      name: { dataType: 'string', required: true },
     },
     additionalProperties: false,
   },
@@ -93,6 +128,85 @@ export function RegisterRoutes(app: Router) {
   //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
   //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
   // ###########################################################################################################
+  app.get(
+    '/v1/humans',
+    authenticateMiddleware([{ api_key: [] }]),
+    ...fetchMiddlewares<RequestHandler>(HumanController),
+    ...fetchMiddlewares<RequestHandler>(HumanController.prototype.getHumans),
+
+    function HumanController_getHumans(request: any, response: any, next: any) {
+      const args = {};
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const controller = new HumanController();
+
+        const promise = controller.getHumans.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, 200, next);
+      } catch (err) {
+        return next(err);
+      }
+    },
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.get(
+    '/v1/humans/:id',
+    authenticateMiddleware([{ api_key: [] }]),
+    ...fetchMiddlewares<RequestHandler>(HumanController),
+    ...fetchMiddlewares<RequestHandler>(HumanController.prototype.getHuman),
+
+    function HumanController_getHuman(request: any, response: any, next: any) {
+      const args = {
+        id: { in: 'path', name: 'id', required: true, dataType: 'double' },
+      };
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const controller = new HumanController();
+
+        const promise = controller.getHuman.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, 200, next);
+      } catch (err) {
+        return next(err);
+      }
+    },
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.post(
+    '/v1/humans',
+    authenticateMiddleware([{ api_key: [] }]),
+    ...fetchMiddlewares<RequestHandler>(HumanController),
+    ...fetchMiddlewares<RequestHandler>(HumanController.prototype.createHuman),
+
+    function HumanController_createHuman(request: any, response: any, next: any) {
+      const args = {
+        createHumanRequest: { in: 'body', name: 'createHumanRequest', required: true, ref: 'CreateHumanRequest' },
+      };
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const controller = new HumanController();
+
+        const promise = controller.createHuman.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, 201, next);
+      } catch (err) {
+        return next(err);
+      }
+    },
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
   app.get(
     '/v1/pets',
     authenticateMiddleware([{ api_key: [] }]),
