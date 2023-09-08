@@ -1030,6 +1030,7 @@
         "type": "object",
         "properties": {
           "location": {
+            "description": "The URI of the Human",
             "type": "string"
           }
         },

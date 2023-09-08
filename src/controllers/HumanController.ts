@@ -1,19 +1,30 @@
-import { Route, Get, Post, Path, Body, OperationId, Tags,  SuccessResponse, Security } from 'tsoa';
+import { Route, Get, Post, Path, Body, OperationId, Tags, SuccessResponse, Response, Security } from 'tsoa';
 
 import { Controller } from '@tsoa/runtime';
-import { HumansList, getHumans, getHumanById, Human, CreateHumanRequest, createHuman } from '../models/Human';
+import { HumansList, getHumans, getHumanById, Human, CreateHumanRequest, ErrorBody, createHuman } from '../models/Human';
 
-
+/**
+ * @tsoaModel
+ * @example
+ * {
+ *     "location": "https://petstore.com/v1/humans/1"
+ * }
+ */
 interface LocationHeader {
+  /**
+   * The URI of the Human
+   */
   location: string;
 }
 
 @Route('humans')
-// @Response<ErrorBody & { message: 'User is not authorized' }>(401, 'Unauthorized')
-// @Response<ErrorBody & { message: 'User is forbidden to access the resource' }>(403, 'Forbidden')
+@Response<ErrorBody & { message: 'User is not authorized' }>(401, 'Unauthorized')
+@Response<ErrorBody & { message: 'User is forbidden to access the resource' }>(403, 'Forbidden')
 @Security('api_key')
 export class HumanController extends Controller {
-
+  /**
+   * Lists all humans in the PetStore
+   */
   @Get()
   @OperationId('listHumans')
   @Tags('Read')
@@ -22,6 +33,10 @@ export class HumanController extends Controller {
     return getHumans();
   }
 
+  /**
+   * Get a human by its id
+   * @param id id of the human to fetch
+   */
   @Get('{id}')
   @Tags('Read')
   @OperationId('getHuman')
@@ -35,7 +50,10 @@ export class HumanController extends Controller {
     return human;
   }
 
-
+  /**
+   * Create a new pet with its adorable name
+   * @param createHumanRequest the information to create the pet
+   */
   @Post()
   @Tags('Write')
   @SuccessResponse<LocationHeader>('201', 'Created')
