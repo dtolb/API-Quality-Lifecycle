@@ -16,7 +16,7 @@
  */
 export interface HumansList {
   /**
-   * The list of pets
+   * The list of humans
    */
   items: Human[];
 }
