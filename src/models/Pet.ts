@@ -175,3 +175,15 @@ export function getPets(pagination: PaginationRequest): PetsList {
     items: pets,
   };
 }
+
+export function deletePetById(id: number): Pet | null {
+  const index = pets.findIndex((p: Pet) => p.id === id);
+  if (index >= 0 && index < pets.length) {
+    const pet = pets[index];
+    pets.splice(index, 1);
+    return pet;
+  } else {
+    console.error(`Invalid index: ${index}. Cannot remove pet.`);
+    return null;
+  }
+}
