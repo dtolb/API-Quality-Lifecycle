@@ -3,15 +3,13 @@
   "noImplicitAdditionalProperties": "throw-on-extras",
   "controllerPathGlobs": ["./src/controllers/**/*Controller.ts"],
   "spec": {
-    "host": "localhost:3000",
+    "host": "pet-store-kong-3abae03b4c44.herokuapp.com",
     "basePath": "/v1/",
     "outputDirectory": "./spec",
     "specVersion": 3,
     "specFileBaseName": "petStore",
     "description": "This is the API for the Pet Store.",
-    "info": {
-      "title": "Pet Store"
-    },
+    "name": "PetStore",
     "license": "Apache 2.0",
     "contact": {
       "name": "Dan Tolbert: dantolbe@cisco.com",
