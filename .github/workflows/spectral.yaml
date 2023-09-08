@@ -48,8 +48,7 @@ jobs:
           tar -xf deck.tar.gz -C /tmp
           sudo cp /tmp/deck /usr/local/bin/
 
-
-     # Ping to your Kong instance
+      # Ping to your Kong instance
       - name: decK ping
         id: decK_ping
         env:
@@ -59,7 +58,7 @@ jobs:
         run: deck ping --konnect-runtime-group-name ${{ secrets.DECK_GROUP_NAME }} --konnect-token ${{ secrets.DECK_PAT }}
         if: github.event_name == 'release'
 
-     # Generate Config File to sync
+      # Generate Config File to sync
       - name: decK file openapi2kong
         id: deck_file_openapi2kong
         env:
