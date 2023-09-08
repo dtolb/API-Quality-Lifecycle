@@ -1,9 +1,12 @@
 name: Quality Pipeline
 permissions: write-all
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
-      - main # or master, or whatever branch you target with PRs
+      - main
   release:
     types:
       - created
