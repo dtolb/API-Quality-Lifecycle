@@ -1,7 +1,8 @@
-import { Route, Get, Post, Path, Body, OperationId, Tags, SuccessResponse, Response, Security } from 'tsoa';
+import {Route, Get, Post, Path, Body, OperationId, Tags, SuccessResponse, Response, Security, Delete} from 'tsoa';
 
 import { Controller } from '@tsoa/runtime';
-import { HumansList, getHumans, getHumanById, Human, CreateHumanRequest, ErrorBody, createHuman } from '../models/Human';
+import { HumansList, getHumans, deleteHumanById, getHumanById, Human, CreateHumanRequest, ErrorBody, createHuman } from '../models/Human';
+import {CommonResponseHeader} from "../models/Pet";
 
 /**
  * @tsoaModel
@@ -62,4 +63,20 @@ export class HumanController extends Controller {
     this.setStatus(201);
     return createHuman(createHumanRequest);
   }
+
+  /**
+   * Remove a human when after they adopt
+   * @param id id of the pet to update
+   */
+  @Delete('{id}')
+  @SuccessResponse<CommonResponseHeader>('204', 'No Content')
+  public async deletePet(@Path() id: number): Promise<Human | null> {
+    const deletedHuman = deleteHumanById(id);
+    if (deletedHuman === null) {
+      this.setStatus(404);
+      return null;
+    }
+    return deletedHuman;
+  }
+  
 }

@@ -1,3 +1,5 @@
+
+
 /**
  * @tsoaModel
  * @example
@@ -80,3 +82,16 @@ export function getHumans(): HumansList {
     items: humans,
   };
 }
+
+export function deleteHumanById(id: number): Human | null {
+  const index = humans.findIndex((p: Human) => p.id === id);
+  if (index >= 0 && index < humans.length) {
+    const pet = humans[index];
+    humans.splice(index, 1);
+    return pet;
+  } else {
+    console.error(`Invalid index: ${index}. Cannot remove pet.`);
+    return null;
+  }
+}
+
