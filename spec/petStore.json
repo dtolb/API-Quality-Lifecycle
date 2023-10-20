@@ -304,6 +304,218 @@
         "tags": [
           "Read"
         ]
+      },
+      "post": {
+        "operationId": "updateHuman",
+        "description": "Update the pet information by its id",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHumanRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Human"
+                    }
+                  ],
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is not authorized"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is forbidden to access the resource"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ],
+        "tags": [
+          "Write"
+        ]
+      },
+      "delete": {
+        "operationId": "DeletePet",
+        "description": "Remove a human when after they adopt",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of the pet to update",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "headers": {
+              "CommonResponseHeader": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonResponseHeader"
+                },
+                "description": "Common Headers Returned"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Human"
+                    }
+                  ],
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is not authorized"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ErrorBody"
+                    },
+                    {
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "enum": [
+                            "User is forbidden to access the resource"
+                          ],
+                          "nullable": false
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
       }
     },
     "/pets": {
@@ -991,7 +1203,16 @@
       "Human": {
         "type": "object",
         "properties": {
+          "address": {
+            "description": "The address of the human",
+            "type": "string"
+          },
+          "phoneNumber": {
+            "description": "The phone number of the human",
+            "type": "string"
+          },
           "name": {
+            "description": "The name of the human",
             "type": "string"
           },
           "id": {
@@ -1006,6 +1227,8 @@
         },
         "additionalProperties": false,
         "required": [
+          "address",
+          "phoneNumber",
           "name",
           "id"
         ]
@@ -1045,7 +1268,16 @@
       "CreateHumanRequest": {
         "type": "object",
         "properties": {
+          "address": {
+            "description": "The address of the human",
+            "type": "string"
+          },
+          "phoneNumber": {
+            "description": "The phone number of the human",
+            "type": "string"
+          },
           "name": {
+            "description": "The name of the human",
             "type": "string"
           }
         },
@@ -1054,7 +1286,31 @@
         },
         "additionalProperties": false,
         "required": [
+          "address",
+          "phoneNumber",
           "name"
+        ]
+      },
+      "UpdateHumanRequest": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "description": "The address of the human",
+            "type": "string"
+          },
+          "phoneNumber": {
+            "description": "The phone number of the human",
+            "type": "string"
+          }
+        },
+        "example": {
+          "phoneNumber": "555-555-5555",
+          "address": "123 Main St"
+        },
+        "additionalProperties": false,
+        "required": [
+          "address",
+          "phoneNumber"
         ]
       },
       "Pet": {

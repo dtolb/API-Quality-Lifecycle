@@ -43,6 +43,8 @@ const models: TsoaRoute.Models = {
   Human: {
     dataType: 'refObject',
     properties: {
+      address: { dataType: 'string', required: true },
+      phoneNumber: { dataType: 'string', required: true },
       name: { dataType: 'string', required: true },
       id: { dataType: 'double', required: true },
     },
@@ -68,7 +70,18 @@ const models: TsoaRoute.Models = {
   CreateHumanRequest: {
     dataType: 'refObject',
     properties: {
+      address: { dataType: 'string', required: true },
+      phoneNumber: { dataType: 'string', required: true },
       name: { dataType: 'string', required: true },
+    },
+    additionalProperties: false,
+  },
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  UpdateHumanRequest: {
+    dataType: 'refObject',
+    properties: {
+      address: { dataType: 'string', required: true },
+      phoneNumber: { dataType: 'string', required: true },
     },
     additionalProperties: false,
   },
@@ -201,6 +214,61 @@ export function RegisterRoutes(app: Router) {
 
         const promise = controller.createHuman.apply(controller, validatedArgs as any);
         promiseHandler(controller, promise, response, 201, next);
+      } catch (err) {
+        return next(err);
+      }
+    },
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.post(
+    '/v1/humans/:id',
+    authenticateMiddleware([{ api_key: [] }]),
+    ...fetchMiddlewares<RequestHandler>(HumanController),
+    ...fetchMiddlewares<RequestHandler>(HumanController.prototype.updateHuman),
+
+    function HumanController_updateHuman(request: any, response: any, next: any) {
+      const args = {
+        id: { in: 'path', name: 'id', required: true, dataType: 'double' },
+        updateHumanRequest: { in: 'body', name: 'updateHumanRequest', required: true, ref: 'UpdateHumanRequest' },
+      };
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const controller = new HumanController();
+
+        const promise = controller.updateHuman.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, 201, next);
+      } catch (err) {
+        return next(err);
+      }
+    },
+  );
+  // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+  app.delete(
+    '/v1/humans/:id',
+    authenticateMiddleware([{ api_key: [] }]),
+    ...fetchMiddlewares<RequestHandler>(HumanController),
+    ...fetchMiddlewares<RequestHandler>(HumanController.prototype.deletePet),
+
+    function HumanController_deletePet(request: any, response: any, next: any) {
+      const args = {
+        id: { in: 'path', name: 'id', required: true, dataType: 'double' },
+      };
+
+      // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+      let validatedArgs: any[] = [];
+      try {
+        validatedArgs = getValidatedArgs(args, request, response);
+
+        const controller = new HumanController();
+
+        const promise = controller.deletePet.apply(controller, validatedArgs as any);
+        promiseHandler(controller, promise, response, 204, next);
       } catch (err) {
         return next(err);
       }

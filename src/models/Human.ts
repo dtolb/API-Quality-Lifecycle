@@ -1,5 +1,3 @@
-
-
 /**
  * @tsoaModel
  * @example
@@ -45,8 +43,30 @@ export interface Human extends CreateHumanRequest {
  *  "name": "Dan"
  * }
  */
-export interface CreateHumanRequest {
+export interface CreateHumanRequest extends UpdateHumanRequest {
+  /**
+   * The name of the human
+   */
   name: string;
+}
+
+/**
+ * @tsoaModel
+ * @example
+ * {
+ * "phoneNumber": "555-555-5555",
+ * "address": "123 Main St"
+ * }
+ */
+export interface UpdateHumanRequest {
+  /**
+   * The address of the human
+   */
+  address: string;
+  /**
+   * The phone number of the human
+   */
+  phoneNumber: string;
 }
 
 /**
@@ -67,6 +87,8 @@ export function createHuman(createHumanRequest: CreateHumanRequest): Human {
   const newHuman = {
     id: nextId++,
     name: createHumanRequest.name,
+    address: createHumanRequest.address,
+    phoneNumber: createHumanRequest.phoneNumber,
   };
 
   humans.push(newHuman);
@@ -83,6 +105,20 @@ export function getHumans(): HumansList {
   };
 }
 
+export function updateHumanById(id: number, updateHumanRequest: UpdateHumanRequest): Human | null {
+  const index = humans.findIndex((p: Human) => p.id === id);
+  if (index >= 0 && index < humans.length) {
+    humans[index] = {
+      ...humans[index],
+      ...updateHumanRequest,
+    };
+    return humans[index];
+  } else {
+    console.error(`Invalid index: ${index}. Cannot update pet.`);
+    return null;
+  }
+}
+
 export function deleteHumanById(id: number): Human | null {
   const index = humans.findIndex((p: Human) => p.id === id);
   if (index >= 0 && index < humans.length) {
@@ -94,4 +130,3 @@ export function deleteHumanById(id: number): Human | null {
     return null;
   }
 }
-
