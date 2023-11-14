@@ -6,12 +6,14 @@
  *     {
  *       "id": 1,
  *       "name": "Fargo",
- *       "species": "dog"
+ *       "species": "dog",
+ *       "age": 9
  *     },
  *     {
  *       "id": 2,
  *       "name": "June",
- *       "species": "dog"
+ *       "species": "dog",
+ *       "age": 10
  *     }
  *   ]
  * }
@@ -29,7 +31,8 @@ export interface PetsList {
  * {
  *   "id": 2,
  *   "name": "Fargo",
- *   "species": "dog"
+ *   "species": "dog",
+ *   "age": 9
  * }
  */
 export interface Pet extends CreatePetRequest {
@@ -68,7 +71,8 @@ export interface PaginationRequest {
  * @example
  * {
  *  "name": "Fargo",
- *  "species": "dog"
+ *  "species": "dog",
+ *  "age": 8
  * }
  */
 export interface CreatePetRequest extends UpdatePetRequest {
@@ -82,7 +86,8 @@ export interface CreatePetRequest extends UpdatePetRequest {
  * @tsoaModel
  * @example
  * {
- *   "name": "Dolph"
+ *   "name": "Dolph",
+ *   "age": 9
  * }
  */
 export interface UpdatePetRequest {
@@ -90,6 +95,11 @@ export interface UpdatePetRequest {
    * The name of the pet, can be updated later
    */
   name: string;
+
+  /**
+   * the age of the pet, can be updated later
+   */
+  age: number;
 }
 
 /**
@@ -147,6 +157,7 @@ export function createPet(createPetRequest: CreatePetRequest): Pet {
     id: nextId++,
     name: createPetRequest.name,
     species: createPetRequest.species,
+    age: createPetRequest.age,
   };
 
   pets.push(newPet);
@@ -161,6 +172,7 @@ export function updatePet(id: number, updatePetRequest: UpdatePetRequest): Pet |
 
   const existingPet = pets[index];
   existingPet.name = updatePetRequest.name ? updatePetRequest.name : existingPet.name;
+  existingPet.age = updatePetRequest.age ? updatePetRequest.age : existingPet.age;
   return existingPet;
 }
 
